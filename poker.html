@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🐯澳门德州扑克🐯</title>
+    <style>
+        /* 基础样式 */
+        body {
+            background: #006400; /* 深绿色背景 */
+            color: white;
+            font-family: Arial;
+            text-align: center;
+        }
+        #header {
+            font-size: 30px;
+            padding: 20px;
+            background: #8B0000; /* 深红色 */
+            margin-bottom: 20px;
+        }
+        .player {
+            border: 3px solid gold;
+            padding: 15px;
+            margin: 10px auto;
+            width: 300px;
+        }
+        .buttons button {
+            background: #FFD700;
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            cursor: pointer;
+        }
+        #community-cards {
+            font-size: 24px;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 标题 -->
+    <div id="header">🃏 作者：澳门第一深情亲斤可可 🃏</div>
+    
+    <!-- 公共牌 -->
+    <div id="community-cards">公共牌：♠️? ♥️? ♦️? ♣️? ❤️?</div>
+
+    <!-- 玩家1区域 -->
+    <div class="player" id="player1">
+        <h2>👑 玩家1 (筹码: <span id="p1-chips">100</span>万)</h2>
+        <div>手牌：♥️2 ♦️7</div>
+        <div class="buttons">
+            <button onclick="playerAction(1,1)">加注1万</button>
+            <button onclick="playerAction(1,2)">加注2万</button>
+            <button onclick="playerAction(1,5)">加注5万</button>
+            <button onclick="playerAction(1,'allin')">梭哈</button>
+        </div>
+    </div>
+
+    <!-- 玩家2区域 -->
+    <div class="player" id="player2">
+        <h2>🎩 玩家2 (筹码: <span id="p2-chips">100</span>万)</h2>
+        <div>手牌：?? ??</div>
+        <div class="buttons">
+            <button onclick="playerAction(2,1)">加注1万</button>
+            <button onclick="playerAction(2,2)">加注2万</button>
+            <button onclick="playerAction(2,5)">加注5万</button>
+            <button onclick="playerAction(2,'allin')">梭哈</button>
+        </div>
+    </div>
+
+    <script>
+        // 游戏数据
+        let gameData = {
+            currentPlayer: 1, // 当前操作玩家
+            p1: 100, // 玩家1筹码（单位：万）
+            p2: 100  // 玩家2筹码
+        }
+
+        // 玩家操作函数
+        function playerAction(player, amount) {
+            if(player !== gameData.currentPlayer) {
+                alert("现在不是你的回合！");
+                return;
+            }
+
+            // 处理加注
+            if(amount === 'allin') amount = gameData['p'+player];
+            if(amount > gameData['p'+player]) {
+                alert("筹码不足！");
+                return;
+            }
+            
+            gameData['p'+player] -= amount;
+            updateDisplay();
+
+            // 切换玩家
+            gameData.currentPlayer = player === 1 ? 2 : 1;
+            alert(`玩家${player}下注${amount}万！\n轮到玩家${gameData.currentPlayer}操作`);
+        }
+
+        // 更新界面
+        function updateDisplay() {
+            document.getElementById('p1-chips').textContent = gameData.p1;
+            document.getElementById('p2-chips').textContent = gameData.p2;
+        }
+
+        // 初始化游戏
+        setTimeout(() => {
+            alert("游戏开始！\n玩家1先行动");
+        }, 500);
+    </script>
+</body>
+</html>
